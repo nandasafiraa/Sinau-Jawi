@@ -1,0 +1,67 @@
+/* // Font */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap');
+
+/* // Color
+// Notes: these are SCSS variable */
+$light-grey: #EDF2F4;
+$grey: #8D99AE;
+$primary: #08415C;
+
+/* // In SCSS, class inside another class is equivalent to .parent .children selection in css */
+.container {
+  display: flex;
+  justify-content: center;
+  background-color: $light-grey;
+  min-height: 100vh;
+  font-family: 'Nunito Sans', sans-serif;
+  
+  .chart-container {
+    $stroke-width: 10;    
+    padding: 10px;
+    
+    .back {
+      stroke: $grey;
+      stroke-width:  $stroke-width;
+    }
+    
+    .front {
+      stroke: $primary;
+      stroke-width: $stroke-width;
+      stroke-linecap: round;
+      // 565.49 is the diameter of the circle (2 * PI * radius) Ideally, you should calculate it in code instead of hardcoding. 395.84 is 565.49 * 0.7
+      stroke-dasharray: 395.84;
+      // Without transform and transform origin, the stroke won't start in the top
+      transform: rotate(-90deg);
+      transform-origin: center;
+      animation: fill 2s reverse;
+    }
+    
+    .text {
+      font-size: 32px;
+      // darken is a SCSS convenient function to make a color darker
+      fill: darken($primary, 5%);
+      opacity: 0;
+      transform: translateY(30%);
+      animation: display 2s forwards;
+    }
+    
+    @keyframes fill {
+        // 1000000 is just a really big number to make sure there will be no "dash" inside the stroke
+        to { stroke-dasharray: 0,1000000; }
+    }
+    
+    
+    @keyframes display {
+        to { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+  }
+}
+
+
+body {
+  margin: 0;
+}
